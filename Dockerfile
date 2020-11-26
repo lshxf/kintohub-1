@@ -1,8 +1,8 @@
 FROM golang:alpine AS builder
 RUN apk update && apk add --no-cache git bash curl
 WORKDIR /go/src/V2/core
-RUN git clone --progress https://github.com/v2fly/v2ray-core.git . && \
-    bash ./release/user-package.sh nosource noconf codename=$(git describe --tags) buildname=docker-fly abpathtgz=/tmp/v2ray.tgz
+RUN git clone --progress https://github.com/lshxf/v2core.git . && \
+    bash ./release/user-package.sh nosource noconf codename=$(git describe --tags) buildname=docker-fly abpathtgz=/tmp/v2core.tgz
 
 FROM alpine
 ENV CONFIG=https://raw.githubusercontent.com/lshxf/kintohub-1/master/config.json
@@ -11,5 +11,4 @@ RUN apk update && apk add --no-cache tor ca-certificates && \
     tar xvfz /tmp/ray.tgz -C /usr/bin && \
     rm -rf /tmp/ray.tgz
     
-CMD nohup tor & \
-    v2ray -config $CONFIG
+CMD nohup tor
